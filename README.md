@@ -1,2 +1,1 @@
-# clean-react-native-25-example
-A clean RN25 example project
+#A clean React Native 0.25.1 template project
