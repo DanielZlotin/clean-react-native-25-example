@@ -10,7 +10,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "watchman watch-del-all && node node_modules/react-native/local-cli/cli.js start",
+    "start": "watchman watch-del-all && adb reverse tcp:8081 tcp:8081 && node node_modules/react-native/local-cli/cli.js start",
     "build": ": #rm -rf dist && babel src -d dist",
     "lint": "eslint src test",
     "pretest": "npm run lint",
