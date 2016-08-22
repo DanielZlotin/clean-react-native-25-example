@@ -8,16 +8,66 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 
+import _ from 'lodash';
+
+//import {createStore} from 'redux';
+//
+//const initialState = {
+//  counter: 0
+//};
+//function reducer(state = initialState, action) {
+//  switch (action.type) {
+//    case 'INCREMENT':
+//      return {counter: state.counter + 1};
+//    case 'DECREMENT':
+//      return {counter: state.counter - 1};
+//    default:
+//      return state;
+//  }
+//}
+//
+//const store = createStore(reducer);
+
+import autobind from 'autobind';
+
 class template extends Component {
+
+  constructor(props) {
+    super(props);
+    autobind(this);
+    //store.subscribe(() => {
+    //  this.forceUpdate();
+    //});
+  }
+
+  onClick() {
+    //store.dispatch({type: 'INCREMENT'});
+  }
+
+  renderButton(i) {
+    return (
+      <TouchableOpacity key={i} onPress={this.onClick}>
+        <View style={{margin: 10}}>
+          <Text style={{fontSize: 30}}>{'Click me!'}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>{'Welcome to React Native! 0.25.1'}</Text>
-        <Text style={styles.instructions}>{'To get started, edit index.android.js'}</Text>
-        <Text style={styles.instructions}>{'Shake or press menu button for dev menu'}</Text>
+        <Text style={styles.instructions}>{123}</Text>
+
+        <ScrollView style={{flex: 1}}>
+          {_.times(500, (i) => this.renderButton(i))}
+        </ScrollView>
       </View>
     );
   }
