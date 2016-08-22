@@ -2,7 +2,7 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
-
+/* eslint-disable */
 import React, {Component} from 'react';
 import {
   AppRegistry,
@@ -16,6 +16,7 @@ import {
 import _ from 'lodash';
 
 import {createStore} from 'redux';
+import {Provider, connect} from 'react-redux';
 
 const initialState = {
   counter: 0
@@ -40,13 +41,10 @@ class template extends Component {
   constructor(props) {
     super(props);
     autobind(this);
-    store.subscribe(() => {
-      this.forceUpdate();
-    });
   }
 
   onClick() {
-    store.dispatch({type: 'INCREMENT'});
+    this.props.dispatch({type: 'INCREMENT'});
   }
 
   renderButton(i) {
@@ -63,7 +61,7 @@ class template extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>{'Welcome to React Native! 0.25.1'}</Text>
-        <Text style={styles.instructions}>{store.getState().counter}</Text>
+        <Text style={styles.instructions}>{this.props.counter}</Text>
 
         <ScrollView style={{flex: 1}}>
           {_.times(500, (i) => this.renderButton(i))}
@@ -92,4 +90,22 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('template', () => template);
+function mapStateToProps(state) {
+  return {
+    counter: state.counter
+  };
+}
+
+const Connected = connect(mapStateToProps)(template);
+
+class Wrapped extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Connected/>
+      </Provider>
+    );
+  }
+}
+
+AppRegistry.registerComponent('template', () => Wrapped);
