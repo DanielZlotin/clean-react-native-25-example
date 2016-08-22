@@ -33,19 +33,23 @@ import _ from 'lodash';
 //
 //const store = createStore(reducer);
 
-import autobind from 'autobind';
+import autobind from 'react-autobind';
 
 class template extends Component {
 
   constructor(props) {
     super(props);
     autobind(this);
+    this.state = {
+      counter: 0
+    };
     //store.subscribe(() => {
     //  this.forceUpdate();
     //});
   }
 
   onClick() {
+    this.setState({counter: this.state.counter + 1});
     //store.dispatch({type: 'INCREMENT'});
   }
 
@@ -63,7 +67,7 @@ class template extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>{'Welcome to React Native! 0.25.1'}</Text>
-        <Text style={styles.instructions}>{123}</Text>
+        <Text style={styles.instructions}>{this.state.counter}</Text>
 
         <ScrollView style={{flex: 1}}>
           {_.times(500, (i) => this.renderButton(i))}
