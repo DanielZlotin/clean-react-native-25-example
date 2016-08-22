@@ -15,23 +15,23 @@ import {
 
 import _ from 'lodash';
 
-//import {createStore} from 'redux';
-//
-//const initialState = {
-//  counter: 0
-//};
-//function reducer(state = initialState, action) {
-//  switch (action.type) {
-//    case 'INCREMENT':
-//      return {counter: state.counter + 1};
-//    case 'DECREMENT':
-//      return {counter: state.counter - 1};
-//    default:
-//      return state;
-//  }
-//}
-//
-//const store = createStore(reducer);
+import {createStore} from 'redux';
+
+const initialState = {
+  counter: 0
+};
+function reducer(state = initialState, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return {counter: state.counter + 1};
+    case 'DECREMENT':
+      return {counter: state.counter - 1};
+    default:
+      return state;
+  }
+}
+
+const store = createStore(reducer);
 
 import autobind from 'react-autobind';
 
@@ -40,17 +40,13 @@ class template extends Component {
   constructor(props) {
     super(props);
     autobind(this);
-    this.state = {
-      counter: 0
-    };
-    //store.subscribe(() => {
-    //  this.forceUpdate();
-    //});
+    store.subscribe(() => {
+      this.forceUpdate();
+    });
   }
 
   onClick() {
-    this.setState({counter: this.state.counter + 1});
-    //store.dispatch({type: 'INCREMENT'});
+    store.dispatch({type: 'INCREMENT'});
   }
 
   renderButton(i) {
@@ -67,7 +63,7 @@ class template extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>{'Welcome to React Native! 0.25.1'}</Text>
-        <Text style={styles.instructions}>{this.state.counter}</Text>
+        <Text style={styles.instructions}>{store.getState().counter}</Text>
 
         <ScrollView style={{flex: 1}}>
           {_.times(500, (i) => this.renderButton(i))}
